@@ -2,9 +2,9 @@ window.addEventListener('DOMContentLoaded',()=>{
 
     const tab = document.querySelectorAll('.tabheader__item'),
         tabItem = document.querySelectorAll('.tabcontent'),
-        button = document.querySelectorAll('.btn'),
+        button = document.querySelectorAll('[data-modal]'),
         modalWindow = document.querySelector('.modal'),
-        modalClose = document.querySelector('.modal__close'),
+        modalClose = document.querySelector('[data-close]'),
         height = document.querySelector('#height');
    
 
@@ -48,32 +48,54 @@ clickTab();
 button.forEach((element)=>{
     element.addEventListener('click',()=>{
         modalWindow.style.display = 'block';
+        document.body.style.overflow = 'hidden';
     });
 
 });
+
+function closeModal (){
+    modalWindow.style.display = 'none';
+    document.body.style.overflow = 'visible';
+};
 
 modalClose.addEventListener('click', ()=>{
-    modalWindow.style.display = 'none';
+    closeModal();
+});
+
+modalWindow.addEventListener('click', (e)=>{
+    if (e.target === modalWindow){
+        closeModal();
+    }
+});
+
+document.addEventListener('keydown',(e) => {
+    if(e.code === "Escape"){
+        closeModal();
+    }
 });
 
 
+const chooseItem = document.querySelectorAll('[data-gender="gender"]');
+
+chooseItem.forEach( (element)=>{
+    
+        element.addEventListener('click' ,()=>{
+            
+            element.classList.add('calculating__choose-item_active');
+        })
+
+    
+})
 
 
-const chooseItem = document.querySelector('#gender'),
-    clickItem = document.querySelectorAll('.calculating__choose-item');
 
-    clickItem.forEach(element => {
 
-      
 
-        element.addEventListener('click', ()=>{
-        
-            console.log();
-        
-            element.classList.toggle('calculating__choose-item_active');
 
-        });
-    });
+
+
+
+
 // Timer
 
     const deadLine = '2022-12-17';
