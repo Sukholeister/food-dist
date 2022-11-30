@@ -47,16 +47,12 @@ clickTab();
 
 button.forEach((element)=>{
     element.addEventListener('click',()=>{
-        modalWindow.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        openModal();
     });
 
 });
 
-function closeModal (){
-    modalWindow.style.display = 'none';
-    document.body.style.overflow = 'visible';
-};
+
 
 modalClose.addEventListener('click', ()=>{
     closeModal();
@@ -78,16 +74,20 @@ document.addEventListener('keydown',(e) => {
 const chooseItem = document.querySelectorAll('[data-gender="gender"]');
 
 chooseItem.forEach( (element)=>{
-    
         element.addEventListener('click' ,()=>{
-            
             element.classList.add('calculating__choose-item_active');
         })
 
     
-})
+});
 
 
+// Open modal window at 15 sec.
+
+    const timerInterval =  setTimeout(openModal,4000);
+
+//
+window.addEventListener('scroll', scrollModalWindow );
 
 
 
@@ -143,27 +143,29 @@ chooseItem.forEach( (element)=>{
         }
 
     }
+
     setClock(".timer", deadLine );
 
 
+    function closeModal (){
+        modalWindow.style.display = 'none';
+        document.body.style.overflow = 'visible';
+    }
+    
+    function openModal() {
+        modalWindow.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        clearTimeout(timerInterval);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    function scrollModalWindow (){
+            if(window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight )
+                {
+                    openModal();
+                    window.removeEventListener('scroll', scrollModalWindow );
+                }
+       
+    }
 
 });
 
